@@ -6,6 +6,7 @@ import usePagination, { DOTS } from "../hooks/usePagination";
 import PropTypes from "prop-types";
 import React from "react";
 import { nanoid } from "nanoid";
+import { useEffect } from "react";
 
 function Pagination({
   onPageChange,
@@ -15,19 +16,27 @@ function Pagination({
   pageSize,
   pageSizeOptions,
 }) {
-  const paginationRange = usePagination({
-    currentPage,
-    totalCount,
-    pageSize,
-  });
+
+  const [paginationRange, {setPageNumber, setPageSize}] = usePagination(totalCount);
+  console.log(paginationRange)
 
   const onNext = () => {
     onPageChange(currentPage + 1);
+    setPageNumber(currentPage + 1, pageSize);
   };
 
   const onPrevious = () => {
     onPageChange(currentPage - 1);
+    setPageNumber(currentPage - 1, pageSize);
   };
+
+  useEffect(()=> {
+    setPageSize(pageSize)
+  }, [pageSize])
+
+  useEffect(() => {
+    setPageNumber(currentPage, pageSize)
+  }, [currentPage])
 
   return (
     <ul
