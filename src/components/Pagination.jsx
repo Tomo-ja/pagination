@@ -30,6 +30,7 @@ function Pagination({
     setPageNumber(currentPage - 1, pageSize);
   };
 
+  // FIXME: here is problem when page size changed, current page also change, as a result, pagination set state call twice that cased problem
   useEffect(()=> {
     setPageSize(pageSize)
   }, [pageSize])
